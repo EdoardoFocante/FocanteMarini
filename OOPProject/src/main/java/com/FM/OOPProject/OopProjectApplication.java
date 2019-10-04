@@ -10,9 +10,10 @@ import com.FM.OOPProject.utilities.TSVParse;
 
 @SpringBootApplication
 public class OopProjectApplication {
-
+	public static ArrayList<City> Cities;
 	public static void main(String[] args) throws Exception {
-		ArrayList<City> Cities = new ArrayList<City>();
+		//ArrayList<City> Cities = new ArrayList<City>();
+		Cities= new ArrayList<City>();
 		TSVDownload.GetTSV();
 		TSVParse.ParseTSV(Cities);
 		SpringApplication.run(OopProjectApplication.class, args);

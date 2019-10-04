@@ -4,19 +4,19 @@ import java.util.Arrays;
 
 public class City {
 	private String indic_ur;
-	private String campo2;
-	private int[] citiesperyear;
+	private String citycode;
+	private float[] data;
 	
-	public City(String indic_ur, String campo2, int[] citiesperyear) {
+	public City(String indic_ur, String citycode, float[] data) {
 		super();
 		this.indic_ur = indic_ur;
-		this.campo2 = campo2;
-		this.citiesperyear = citiesperyear;
+		this.citycode = citycode;
+		this.data = data;
 	}
 
 	@Override
 	public String toString() {
-		return "City [indic_ur=" + indic_ur + ", campo2=" + campo2 + ", citiesperyear=" + Arrays.toString(citiesperyear)
+		return "City [indic_ur=" + indic_ur + ", citycode=" + citycode + ", data=" + Arrays.toString(data)
 				+ "]";
 	}
 
@@ -24,8 +24,8 @@ public class City {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((campo2 == null) ? 0 : campo2.hashCode());
-		result = prime * result + Arrays.hashCode(citiesperyear);
+		result = prime * result + ((citycode == null) ? 0 : citycode.hashCode());
+		result = prime * result + Arrays.hashCode(data);
 		result = prime * result + ((indic_ur == null) ? 0 : indic_ur.hashCode());
 		return result;
 	}
@@ -39,12 +39,12 @@ public class City {
 		if (getClass() != obj.getClass())
 			return false;
 		City other = (City) obj;
-		if (campo2 == null) {
-			if (other.campo2 != null)
+		if (citycode == null) {
+			if (other.citycode != null)
 				return false;
-		} else if (!campo2.equals(other.campo2))
+		} else if (!citycode.equals(other.citycode))
 			return false;
-		if (!Arrays.equals(citiesperyear, other.citiesperyear))
+		if (!Arrays.equals(data, other.data))
 			return false;
 		if (indic_ur == null) {
 			if (other.indic_ur != null)
@@ -62,19 +62,19 @@ public class City {
 		this.indic_ur = indic_ur;
 	}
 
-	public String getCampo2() {
-		return campo2;
+	public String getcitycode() {
+		return citycode;
 	}
 
-	public void setCampo2(String campo2) {
-		this.campo2 = campo2;
+	public void setcitycode(String citycode) {
+		this.citycode = citycode;
 	}
 
-	public int[] getCitiesperyear() {
-		return citiesperyear;
+	public float[] getdata() {
+		return data;
 	}
 
-	public void setCitiesperyear(int[] citiesperyear) {
-		this.citiesperyear = citiesperyear;
+	public void setdata(float[] data) {
+		this.data = data;
 	}
 }

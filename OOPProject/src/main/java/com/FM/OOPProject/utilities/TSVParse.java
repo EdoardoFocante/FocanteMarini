@@ -19,16 +19,16 @@ public class TSVParse {
 		while ((line = in3.readLine()) != null) {
 			String[] ss = line.split("\t");
 			String[] ss1 = ss[0].split(",");
-			int[] cpy = new int[29];
+			float[] cpy = new float[29];
 			for (int i = 1; i < ss.length; i++) {
-				if (Pattern.matches("\\d+.", ss[i])) {
-					cpy[i - 1] = Math.round(Float.parseFloat(ss[i]));
+				if (Pattern.matches("\\d+\\.\\d+ ", ss[i])) {
+					cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); //numeri con virgola con lettera;
 				} else {
 					if (Pattern.matches("\\d+ ", ss[i])) {
-						cpy[i - 1] = Integer.parseInt(ss[i].split(" ")[0]);
+						cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); //interi con lettera
 					} else {
 						if (Pattern.matches("\\d+", ss[i]))
-							cpy[i - 1] = Integer.parseInt(ss[i]);
+							cpy[i - 1] = Float.parseFloat(ss[i]);
 						else
 							cpy[i - 1] = -1;
 
