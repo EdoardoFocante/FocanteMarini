@@ -62,19 +62,26 @@ public class City {
 		this.indic_ur = indic_ur;
 	}
 
-	public String getcitycode() {
+	public String getCitycode() {
 		return citycode;
 	}
 
-	public void setcitycode(String citycode) {
+	public void setCitycode(String citycode) {
 		this.citycode = citycode;
 	}
 
-	public float[] getdata() {
+	public float[] getData() {
 		return data;
 	}
-
-	public void setdata(float[] data) {
+	
+	public float getYearData(int year) {
+		return data[yeartoIndex(year)];
+	}
+	
+	private int yeartoIndex(int year) {
+		return year-=1980;
+	}
+	public void setData(float[] data) {
 		this.data = data;
 	}
 }

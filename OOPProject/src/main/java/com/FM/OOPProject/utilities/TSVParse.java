@@ -23,18 +23,16 @@ public class TSVParse {
 			for (int i = 1; i < ss.length; i++) {
 				if (Pattern.matches("\\d+\\.\\d+ ", ss[i])) {
 					cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); //numeri con virgola con lettera;
-				} else {
-					if (Pattern.matches("\\d+ ", ss[i])) {
+				} else if (Pattern.matches("\\d+ ", ss[i])) {
 						cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); //interi con lettera
-					} else {
-						if (Pattern.matches("\\d+", ss[i]))
+					} else if (Pattern.matches("\\d+", ss[i]))
 							cpy[i - 1] = Float.parseFloat(ss[i]);
 						else
 							cpy[i - 1] = -1;
 
 					}
-				}
-			}
+				
+			
 
 			Cities.add(new City(ss1[0], ss1[1], cpy));
 		}
