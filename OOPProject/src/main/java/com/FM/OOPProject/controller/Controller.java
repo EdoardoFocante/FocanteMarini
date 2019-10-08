@@ -24,8 +24,6 @@ import static com.FM.OOPProject.OopProjectApplication.Cities;
 @RestController
 public class Controller {
 	
-	public FilterUtils filter;
-
 	@RequestMapping(value="/data", method = { RequestMethod.POST, RequestMethod.GET })
 	public ArrayList<City> GetData() {
 		return Cities;
@@ -40,7 +38,7 @@ public class Controller {
 		
 	}
 	
-	@RequestMapping(value="/stats", produces="application/json")
+	@RequestMapping(value="/filter", produces="application/json")
 	public ArrayList<City> givestats(@RequestBody() String jsonfilter) throws Exception { //@RequestParam(name="field",defaultvalue="");
 		return filteract(Cities,jsonfilter); //Parsing del request body
 }
@@ -67,13 +65,13 @@ public class Controller {
 	
 	}
 	private ArrayList<City> filteract1(JSONObject Condition, ArrayList<City> src, ArrayList<City> in ) throws Exception {
-		FilterUtils filter = new FilterUtils();
+		FilterUtils util = new FilterUtils();
 		String fieldname = Condition.names().get(0).toString();	
 		String op= Condition.getJSONObject(fieldname).names().get(0).toString();
-		Object value= Condition.getJSONObject(fieldname).getString(op);
-		System.out.println(fieldname);
-		System.out.println(op);
-		System.out.println(value);
-		return (ArrayList<City>) filter.select(src, fieldname, op, in , value);
+		Object value= Condition.getJSONObject(fieldname).get(op);
+		//System.out.println(fieldname);
+		//System.out.println(op);
+		//System.out.println(value);
+		return (ArrayList<City>) util.select(src, fieldname, op, in , value);
 	}
 }

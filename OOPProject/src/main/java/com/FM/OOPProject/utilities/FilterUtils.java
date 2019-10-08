@@ -1,8 +1,11 @@
 package com.FM.OOPProject.utilities;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.regex.Pattern;
+
 import com.FM.OOPProject.model.City;
 
 public class FilterUtils {
@@ -40,7 +43,7 @@ public class FilterUtils {
 				case "$nin":
 					return !(value.equals(par[0]));
 				default:
-					throw new Exception("Operator in not compatible with string type");
+					throw new Exception("Operator "+ operator+" is not compatible with string type");
 				} 
 			} else throw new Exception("Invalid parameter format");
 		} else { // par is made of more than one element
@@ -57,7 +60,7 @@ public class FilterUtils {
 					return (valueD <= ub && valueD >=parD);
 				}
 			default: 
-				throw new Exception("Operator not compatible with parameters");
+				throw new Exception("Operator "+ operator+" not compatible with parameters");
 
 
 			}
@@ -76,21 +79,35 @@ public class FilterUtils {
 	}
 
 
-	private void selectAct(Collection<City> src, Collection<City> out, Object fieldName, String operator, Object... value) throws Exception {
+	private void selectAct(Collection<City> src, Collection<City> out, String fieldName, String operator, Object... value) throws Exception {
 		for(City item:src) {
 			try {
-				if (fieldName instanceof Number) {
+				Object tmp = new Object();
+				if (Pattern.matches("^\\d+$",fieldName)){
+						int year = Integer.parseInt((String) fieldName);
+						tmp = item.getYearData(year);
+					} 
+					else {
+						Method m = item.getClass().getMethod("get"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1), null);
+						tmp = m.invoke(item);
+						}
+				if(FilterUtils.check(tmp, operator, value) && !(out.contains(item))) {
+					out.add(item);
+				}
+				/*if (fieldName instanceof Number) {
 					int year=((Number) fieldName).intValue();
 					Object tmp = item.getYearData(year);
 					if(FilterUtils.check(tmp, operator, value) && !(out.contains(item))) {
 						out.add(item);
 					}
 				}else if (fieldName instanceof String) {
-					Object tmp = item.getCitycode();
+					String sfieldName= (String)fieldName;
+					Method m = item.getClass().getMethod("get"+sfieldName.substring(0,1).toUpperCase()+sfieldName.substring(1), null);
+					Object tmp = m.invoke(item);
 					if(FilterUtils.check(tmp, operator, value) && !(out.contains(item))) {
 						out.add(item);
 					}
-				} 
+				} */
 			}catch (NoSuchMethodException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

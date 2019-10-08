@@ -74,12 +74,14 @@ public class City {
 		return data;
 	}
 	
-	public float getYearData(int year) {
+	public float getYearData(int year) throws Exception {
 		return data[yeartoIndex(year)];
 	}
 	
-	private int yeartoIndex(int year) {
-		return year-=1980;
+	private int yeartoIndex(int year) throws Exception {
+		if (year<2019 && year>1980)
+		return 2018-year;
+		else throw new Exception("Year must be between 2018 and 1980");
 	}
 	public void setData(float[] data) {
 		this.data = data;
