@@ -6,7 +6,7 @@ public class City {
 	private String indic_ur;
 	private String citycode;
 	private float[] data;
-	
+
 	public City(String indic_ur, String citycode, float[] data) {
 		super();
 		this.indic_ur = indic_ur;
@@ -16,8 +16,7 @@ public class City {
 
 	@Override
 	public String toString() {
-		return "City [indic_ur=" + indic_ur + ", citycode=" + citycode + ", data=" + Arrays.toString(data)
-				+ "]";
+		return "City [indic_ur=" + indic_ur + ", citycode=" + citycode + ", data=" + Arrays.toString(data) + "]";
 	}
 
 	@Override
@@ -73,16 +72,18 @@ public class City {
 	public float[] getData() {
 		return data;
 	}
-	
+
 	public float getYearData(int year) throws Exception {
 		return data[yeartoIndex(year)];
 	}
-	
+
 	private int yeartoIndex(int year) throws Exception {
-		if (year<2019 && year>1980)
-		return 2018-year;
-		else throw new Exception("Year must be between 2018 and 1980");
+		if (year < 2019 && year > 1980)
+			return 2018 - year;
+		else
+			throw new Exception("Year must be between 2018 and 1980");
 	}
+
 	public void setData(float[] data) {
 		this.data = data;
 	}
