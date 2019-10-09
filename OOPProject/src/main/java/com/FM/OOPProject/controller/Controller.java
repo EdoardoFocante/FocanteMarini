@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 import com.FM.OOPProject.model.City;
+import com.FM.OOPProject.model.Statistics;
 import com.FM.OOPProject.utilities.FilterUtils;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,12 +26,12 @@ import static com.FM.OOPProject.OopProjectApplication.Cities;
 public class Controller {
 	
 	@RequestMapping(value="/data", method = { RequestMethod.POST, RequestMethod.GET })
-	public ArrayList<City> GetData() {
+	public ArrayList<City> getData() {
 		return Cities;
 				
 	}
 	@RequestMapping(value="/metadata", method = { RequestMethod.POST, RequestMethod.GET }) 
-	public JsonSchema GetMeta() throws JsonMappingException {
+	public JsonSchema getMeta() throws JsonMappingException {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
 		JsonSchema schema = schemaGen.generateSchema(City.class);
@@ -39,9 +40,14 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/filter", produces="application/json")
-	public ArrayList<City> givestats(@RequestBody() String jsonfilter) throws Exception { //@RequestParam(name="field",defaultvalue="");
+	public ArrayList<City> getFiltered(@RequestBody() String jsonfilter) throws Exception { //@RequestParam(name="field",defaultvalue="");
 		return filteract(Cities,jsonfilter); //Parsing del request body
 }
+	@RequestMapping(value="/stats", produces="application/json")
+	public Statistics getStats(@RequestParam(required = true) int year, @RequestBody() String jsonfilter) throws Exception {
+		Statistics stats = new Statistics(filteract(Cities,jsonfilter), year);
+		return stats;
+	}
 	
 	private ArrayList<City> filteract(ArrayList<City> data, String jsonfilter) throws Exception {
 		ArrayList<City> filtered= new ArrayList<City>(); // inizializzato perchè funzioni nel caso in cui non fi fosse una or
