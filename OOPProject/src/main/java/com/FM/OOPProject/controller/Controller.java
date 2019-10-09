@@ -24,12 +24,12 @@ import static com.FM.OOPProject.OopProjectApplication.Cities;
 @RestController
 public class Controller {
 	
-	@RequestMapping(value="/data", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value="/data", method = { RequestMethod.POST, RequestMethod.GET }, produces="application/json")
 	public ArrayList<City> GetData() {
 		return Cities;
 				
 	}
-	@RequestMapping(value="/metadata", method = { RequestMethod.POST, RequestMethod.GET }) 
+	@RequestMapping(value="/metadata", method = { RequestMethod.POST, RequestMethod.GET }, produces="application/json") 
 	public JsonSchema GetMeta() throws JsonMappingException {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
@@ -61,7 +61,7 @@ public class Controller {
 			}
 		}
 		if(f.has("$or") || f.has("$and")) return filtered;
-		else throw new Exception("You need to add an and or an or section to this JSON");
+		else throw new Exception("You need to add an \"and\" or an \"or\"section to this JSON");
 	
 	}
 	private ArrayList<City> filteract1(JSONObject Condition, ArrayList<City> src, ArrayList<City> in ) throws Exception {

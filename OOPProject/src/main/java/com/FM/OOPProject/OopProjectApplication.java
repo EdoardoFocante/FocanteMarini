@@ -12,7 +12,6 @@ import com.FM.OOPProject.utilities.TSVParse;
 public class OopProjectApplication {
 	public static ArrayList<City> Cities;
 	public static void main(String[] args) throws Exception {
-		//ArrayList<City> Cities = new ArrayList<City>();
 		Cities= new ArrayList<City>();
 		TSVDownload.GetTSV();
 		TSVParse.ParseTSV(Cities);
