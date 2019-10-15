@@ -2,6 +2,9 @@ package com.FM.OOPProject.model;
 
 import java.util.Arrays;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 public class City {
 	private String indic_ur;
 	private String citycode;
@@ -78,10 +81,10 @@ public class City {
 	}
 
 	private int yeartoIndex(int year) throws Exception {
-		if (year < 2019 && year > 1980)
+		if (year < 2019 && year >= 1990)
 			return 2018 - year;
 		else
-			throw new Exception("Year must be between 2018 and 1980");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Year must be between 2018 and 1990");
 	}
 
 	public void setData(float[] data) {

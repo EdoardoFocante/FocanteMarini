@@ -7,6 +7,7 @@ import com.FM.OOPProject.model.City;
 import java.util.ArrayList;
 
 public class Statistics {
+	private int year;
 	private float max;
 	private float min;
 	private float sum;
@@ -15,6 +16,7 @@ public class Statistics {
 	private float dev_std;
 
 	public Statistics(ArrayList<City> records, int year) throws Exception {
+		this.year = year;
 		ArrayList<Float> column = new ArrayList<Float>();
 		for (City item : records) {
 			if (item.getYearData(year) > 0) {
@@ -46,14 +48,17 @@ public class Statistics {
 	}
 
 	private float min(float[] data) {
-		float min = 0;
-		for (int i = 0; i < data.length; i++) {
-			if (data[i] < min) {
-				min = data[i];
-			}
+		if (data.length > 0) {
+			float min = data[0];
+			for (int i = 0; i < data.length; i++) {
+				if (data[i] < min) {
+					min = data[i];
+				}
 
-		}
-		return min;
+			}
+			return min;
+		} else
+			return 0; // se data non ha valori ritorno 0
 	}
 
 	private float sum(float[] data) {
@@ -64,18 +69,40 @@ public class Statistics {
 		return tot;
 	}
 
-	/* NON HA UTILITà SI PUò OMETTERE??
-	private int count(float[] data) {
-		return data.length;
-
-	}
-	*/
 	private float avg(float[] data) {
 		return sum(data) / data.length;
 	}
 
 	private float dev_std(float[] data) {
 		return (float) Math.sqrt((double) avg(data));
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public float getMax() {
+		return max;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
+	public float getSum() {
+		return sum;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public float getAvg() {
+		return avg;
+	}
+
+	public float getDev_std() {
+		return dev_std;
 	}
 
 }

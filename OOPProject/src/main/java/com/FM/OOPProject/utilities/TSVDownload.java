@@ -21,30 +21,25 @@ public class TSVDownload {
 	}
 
 	public static void GetTSV() throws Exception {
-		//if (!Files.exists(Paths.get("t.tsv"))) {
+		if (!Files.exists(Paths.get("t.tsv"))) {
 			JSONObject obj = new JSONObject(readurl("http://data.europa.eu/euodp/data/api/3/action/package_show?id=ojAmzVahjBnws2njEN0qhQ"));
 			JSONArray arr = obj.getJSONObject("result").getJSONArray("resources");
 			String html = new String();
 			for (int i = 0; i < arr.length(); i++) {
-				// System.out.println(i + " ");
 				if (arr.getJSONObject(i).getString("format").equals("http://publications.europa.eu/resource/authority/file-type/TSV")) {
-					html = readurl(arr.getJSONObject(i).getString("url"));
+					html = readurl(arr.getJSONObject(i).getString("url"));  //leggo il file html come stringa
 					break;
-					// }
 				}
 			}
-			Document document = Jsoup.parse(html);
-			download(document.select("a").first().attr("href"), "t1.tsv");
-		//}
+			Document document = Jsoup.parse(html); //parsing del file html
+			download(document.select("a").first().attr("href"), "t1.tsv"); // estraggo il link al tsv e scarico il file
+		}
 
-		//else {
-			//System.out.println("File Already Exists");
-		//}
 	}
 
 	public static void download(String url, String fileName) throws Exception {
 		try (InputStream in = URI.create(url).toURL().openStream()) {
-			Files.copy(in, Paths.get(fileName),StandardCopyOption.REPLACE_EXISTING); //StandardCopyOption.REPLACE_EXISTING
+			Files.copy(in, Paths.get(fileName),StandardCopyOption.REPLACE_EXISTING);
 		}
 
 	}

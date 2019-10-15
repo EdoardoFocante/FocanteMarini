@@ -6,12 +6,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Service;
+
 import com.FM.OOPProject.model.City;
 
+@Service
 public class TSVParse {
 	public TSVParse() {
 
 	}
+	
+	
 
 	public static void ParseTSV(ArrayList<City> Cities) throws IOException {
 		BufferedReader in3 = new BufferedReader(new FileReader("t1.tsv"));
@@ -39,6 +44,5 @@ public class TSVParse {
 
 		in3.close();
 
-		// java.lang.reflect
 	}
 }
