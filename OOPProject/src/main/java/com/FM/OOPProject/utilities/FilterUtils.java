@@ -1,21 +1,22 @@
 package com.FM.OOPProject.utilities;
 
-import static com.FM.OOPProject.OopProjectApplication.Cities;
 
+
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.regex.Pattern;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.FM.OOPProject.model.City;
-import com.FM.OOPProject.model.Statistics;
 
+/**
+ * Classe che implementa tutte le funzioni di filtraggio
+ */
 public class FilterUtils {
-	public static boolean check(Object value, String operator, Object... par) throws Exception {
+	public static boolean check(Object value, String operator, Object... par) {
 		if (par.length==1) {
 			if (value instanceof Number && par[0] instanceof Number) {
 				Double valueD = ((Number)value).doubleValue();
@@ -80,7 +81,7 @@ public class FilterUtils {
 	}
 
 
-	private void selectAct(Collection<City> src, Collection<City> out, String fieldName, String operator, Object... value) throws Exception {
+	private void selectAct(Collection<City> src, Collection<City> out, String fieldName, String operator, Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
 		for(City item:src) {
 			try {
 				Object tmp = new Object();

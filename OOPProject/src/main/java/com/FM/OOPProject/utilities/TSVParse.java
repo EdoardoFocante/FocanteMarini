@@ -17,7 +17,11 @@ public class TSVParse {
 	}
 	
 	
-
+	/**
+	 * 
+	 * @param Cities Arraylist di City che andrà a contenere il risultato del parsing
+	 * @throws IOException per problemi con l'input e l'output del file
+	 */
 	public static void ParseTSV(ArrayList<City> Cities) throws IOException {
 		BufferedReader in3 = new BufferedReader(new FileReader("t1.tsv"));
 		String line = in3.readLine(); // scarto la prima riga

@@ -22,13 +22,13 @@ import static com.FM.OOPProject.OopProjectApplication.Cities;
 
 @RestController
 public class Controller {
-
+	//ritorna l'intera lista di dati
 	@RequestMapping(value = "/data", method = { RequestMethod.POST, RequestMethod.GET })
 	public ArrayList<City> getData() {
 		return Cities;
 
 	}
-
+	//ritorna i metadati
 	@RequestMapping(value = "/metadata", method = { RequestMethod.POST,
 			RequestMethod.GET }, produces = "application/json")
 	public JsonSchema GetMeta() throws JsonMappingException {
@@ -37,12 +37,12 @@ public class Controller {
 		JsonSchema schema = schemaGen.generateSchema(City.class);
 		return schema;
 	}
-
+	//ritorna lista dopo aver applicato un filtro
 	@RequestMapping(value = "/filter", produces = "application/json")
 	public ArrayList<City> getFiltered(@RequestBody() String jsonfilter) throws Exception {
 		return filteract(Cities, jsonfilter); // Parsing del request body
 	}
-
+	//ritorna statistiche su uno o tutti gli anni dopo aver applicato un filtro
 	@RequestMapping(value = "/stats", produces = "application/json")
 	public ArrayList<Statistics> getStats(@RequestParam(required = false, defaultValue = "-1") int year,
 			@RequestBody() String jsonfilter) throws Exception {

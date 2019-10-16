@@ -6,6 +6,9 @@ import com.FM.OOPProject.model.City;
 
 import java.util.ArrayList;
 
+/**
+ * Classe che racchiude tutte le statistiche del singolo anno e i metodi per calcolarle
+ */
 public class Statistics {
 	private int year;
 	private float max;
@@ -14,7 +17,7 @@ public class Statistics {
 	private int count;
 	private float avg;
 	private float dev_std;
-
+	
 	public Statistics(ArrayList<City> records, int year) throws Exception {
 		this.year = year;
 		ArrayList<Float> column = new ArrayList<Float>();
@@ -58,7 +61,7 @@ public class Statistics {
 			}
 			return min;
 		} else
-			return 0; // se data non ha valori ritorno 0
+			return 0; // se il vettore data non ha valori ritorno 0
 	}
 
 	private float sum(float[] data) {

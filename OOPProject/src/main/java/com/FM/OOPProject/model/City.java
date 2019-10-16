@@ -76,11 +76,11 @@ public class City {
 		return data;
 	}
 
-	public float getYearData(int year) throws Exception {
+	public float getYearData(int year) {
 		return data[yeartoIndex(year)];
 	}
-
-	private int yeartoIndex(int year) throws Exception {
+	//converte un anno nel rispettivo indice dell'array data
+	private int yeartoIndex(int year) {
 		if (year < 2019 && year >= 1990)
 			return 2018 - year;
 		else
