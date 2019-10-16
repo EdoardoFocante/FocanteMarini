@@ -24,7 +24,7 @@ public class FilterUtils {
 	 * @return true se la condizione è verificata, false se non lo è
 	 * @throws ResponseStatusException se i parametri della richiesta non sono adatti al rispettivo operatore
 	 */
-	public static boolean check(Object value, String operator, Object... par) {
+	private static boolean check(Object value, String operator, Object... par) {
 		if (par.length==1) {
 			if (value instanceof Number && par[0] instanceof Number) {
 				Double valueD = ((Number)value).doubleValue();

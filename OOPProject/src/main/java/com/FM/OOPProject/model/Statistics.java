@@ -17,8 +17,13 @@ public class Statistics {
 	private int count;
 	private float avg;
 	private float dev_std;
-	
-	public Statistics(ArrayList<City> records, int year) throws Exception {
+	/**
+	 * Metodo costruttore che crea un oggetto Statistics contenente tutte le statistiche
+	 * di un' ArrayList di oggetti City per un determinato anno
+	 * @param records Array di Oggetti City su cui calcolare le statistiche
+	 * @param year anno per il quale voglio calcolare le statistiche
+	 */
+	public Statistics(ArrayList<City> records, int year) {
 		this.year = year;
 		ArrayList<Float> column = new ArrayList<Float>();
 		for (City item : records) {
@@ -38,7 +43,11 @@ public class Statistics {
 		this.avg = avg(data);
 		this.dev_std = dev_std(data);
 	}
-
+	/**
+	 * Metodo che calcola il valore massimo contenuto in un array
+	 * @param data vettore di cui calcolare il massimo
+	 * @return valore massimo nel vettore
+	 */
 	private float max(float[] data) {
 		float max = 0;
 		for (int i = 0; i < data.length; i++) {
@@ -87,7 +96,7 @@ public class Statistics {
 	public float getMax() {
 		return max;
 	}
-
+	
 	public float getMin() {
 		return min;
 	}

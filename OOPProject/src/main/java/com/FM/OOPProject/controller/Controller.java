@@ -54,7 +54,7 @@ public class Controller {
 	 * @throws Exception Eccezioni lanciate dal metodo filteract
 	 */
 	@RequestMapping(value = "/filter", produces = "application/json")
-	public ArrayList<City> getFiltered(@RequestBody() String jsonfilter) throws Exception {
+	public ArrayList<City> getFiltered(@RequestBody(required = true) String jsonfilter) throws Exception {
 		return filteract(Cities, jsonfilter); // Parsing del request body
 	}
 	/**
@@ -66,7 +66,7 @@ public class Controller {
 	 */
 	@RequestMapping(value = "/stats", produces = "application/json")
 	public ArrayList<Statistics> getStats(@RequestParam(required = false, defaultValue = "-1") int year,
-			@RequestBody() String jsonfilter) throws Exception {
+			@RequestBody(required=true) String jsonfilter) throws Exception {
 		ArrayList<Statistics> result = new ArrayList<Statistics>();
 		ArrayList<City> filtered = filteract(Cities, jsonfilter);
 		if (year == -1) { // anno non inserito, statistiche fatte per ogni anno
@@ -90,10 +90,12 @@ public class Controller {
 	private ArrayList<City> filteract(ArrayList<City> data, String jsonfilter) throws Exception {
 		ArrayList<City> filtered = new ArrayList<City>();
 		JSONObject f = new JSONObject(jsonfilter);
+		if(f.length() != 0) { //controllo che il filtro non sia vuoto
 		JSONArray arr; // Parsing del request body
-		if (f.has("$or")) {
+		if (f.has("$or") && f.getJSONArray("$or").length()>0) { //Seconda condizione per evitare malfunzionamenti in caso di sezioni or vuote
 			arr = f.getJSONArray("$or");
 			for (int i = 0; i < arr.length(); i++) {
+				System.out.println(arr.getJSONObject(i).toString());
 				filtered = filteract1(arr.getJSONObject(i), data, filtered);
 				// per l'or filtro parto dal risultato e aggiungo tutti gli
 				// elementi non già contenuti che soddisfano la nuova condizione
@@ -106,6 +108,7 @@ public class Controller {
 			arr = f.getJSONArray("$and");
 			for (int i = 0; i < arr.length(); i++) {
 				ArrayList<City> emptystart = new ArrayList<City>();
+				System.out.println(arr.getJSONObject(i).toString());
 				filtered = filteract1(arr.getJSONObject(i), filtered, emptystart); 
 				// per l'and filtro la stessa stringa più volte perchè rispetti tutte
 				// le condizioni, aggiungo i nuovi record in una stringa vuota ad ogni iterazione
@@ -116,6 +119,8 @@ public class Controller {
 		} else
 			filtered = filteract1(f, data, new ArrayList<City>());
 		return filtered;
+		}else return data; //se il filtro è vuoto non attuo alcun filtraggio
+	
 	}
 	/**
 	 * Metodo che effettua il parsing delle singole condizioni del filtro e le attua
@@ -127,21 +132,21 @@ public class Controller {
 	 *	racchiuderle in un and oppure un or
 	 */
 	private ArrayList<City> filteract1(JSONObject Condition, ArrayList<City> src, ArrayList<City> in) throws Exception {
-		if (Condition.names().length() < 2) { // controllo se ho un array di condizioni non racchiuso in un and o un or
+		if (Condition.length() < 2) { // controllo se ho un array di condizioni non racchiuso in un and o un or
 			String fieldname = Condition.names().get(0).toString();
 			String op = Condition.getJSONObject(fieldname).names().get(0).toString();
-			if (Condition.getJSONObject(fieldname).get(op) instanceof JSONArray) {
+			if (Condition.getJSONObject(fieldname).get(op) instanceof JSONArray) { // il value dell'operatore può essere un singolo oggetto od un array
 				JSONArray value = Condition.getJSONObject(fieldname).getJSONArray(op);
 				Object[] objvalue = new Object[value.length()];
 				for (int i = 0; i < value.length(); i++) { // converto il valore il jsonarray in un array di oggetti
 					objvalue[i] = value.get(i);
 				}
-				return (ArrayList<City>) FilterUtils.select(src, in, op, fieldname, objvalue);
+				return (ArrayList<City>) FilterUtils.select(src, in, fieldname, op, objvalue);
 
 			} else {
 				Object objvalue = Condition.getJSONObject(fieldname).get(op);
 
-				return FilterUtils.select(src, in, op,fieldname , objvalue);
+				return FilterUtils.select(src, in, fieldname, op , objvalue);
 			}
 		} else
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
