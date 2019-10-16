@@ -20,15 +20,25 @@ import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 
 import static com.FM.OOPProject.OopProjectApplication.Cities;
 
+/**
+ * Controller che gestisce le richieste REST
+ */
 @RestController
 public class Controller {
-	//ritorna l'intera lista di dati
+	/**
+	 * Metodo che restituisce l'intero dataset in formato JSON
+	 * @return Dataset non filtrato in formato JSON
+	 */
 	@RequestMapping(value = "/data", method = { RequestMethod.POST, RequestMethod.GET })
 	public ArrayList<City> getData() {
 		return Cities;
 
 	}
-	//ritorna i metadati
+	/**
+	 * Metodo che restituisce i metadati in formato JSON
+	 * @return metadati in formato JSON
+	 * @throws JsonMappingException Lanciata se si verificano errori nel processing dei file JSON
+	 */
 	@RequestMapping(value = "/metadata", method = { RequestMethod.POST,
 			RequestMethod.GET }, produces = "application/json")
 	public JsonSchema GetMeta() throws JsonMappingException {
@@ -37,12 +47,23 @@ public class Controller {
 		JsonSchema schema = schemaGen.generateSchema(City.class);
 		return schema;
 	}
-	//ritorna lista dopo aver applicato un filtro
+	/**
+	 * Metodo che restituisce un'ArrayList filtrata in formato JSON 
+	 * @param jsonfilter Filtro in formato JSON ottenuto attraverso il body della richiesta POST
+	 * @return ArrayList contenente i record conformi al filtro inserito
+	 * @throws Exception Eccezioni lanciate dal metodo filteract
+	 */
 	@RequestMapping(value = "/filter", produces = "application/json")
 	public ArrayList<City> getFiltered(@RequestBody() String jsonfilter) throws Exception {
 		return filteract(Cities, jsonfilter); // Parsing del request body
 	}
-	//ritorna statistiche su uno o tutti gli anni dopo aver applicato un filtro
+	/**
+	 * Metodo che restituisce le statistiche di una 
+	 * @param year Anno per la quale si vogliono ottenere le statistiche. Se omesso viene restituito il calcolo anno per anno
+	 * @param jsonfilter Filtro in formato JSON ottenuto attraverso il body della richiesta POST
+	 * @return Statistiche in formato JSON ottenute da una lista filtrata
+	 * @throws Exception Eccezioni lanciate dal metodo filteract
+	 */
 	@RequestMapping(value = "/stats", produces = "application/json")
 	public ArrayList<Statistics> getStats(@RequestParam(required = false, defaultValue = "-1") int year,
 			@RequestBody() String jsonfilter) throws Exception {
@@ -58,7 +79,14 @@ public class Controller {
 		}
 		return result;
 	}
-
+	/**
+	 * Metodo che effettua il parsing delle condizioni and e or del filtro e le attua.
+	 * Se non sono presenti richiama solamente la funzione successiva
+	 * @param data ArrayList dei dati su cui operare il filtro
+	 * @param jsonfilter filtro in formato JSON ottenuto attraverso il body della richiesta POST
+	 * @return Lista filtrata
+	 * @throws Exception Eccezzioni lanciate dal metodo filteract1
+	 */
 	private ArrayList<City> filteract(ArrayList<City> data, String jsonfilter) throws Exception {
 		ArrayList<City> filtered = new ArrayList<City>();
 		JSONObject f = new JSONObject(jsonfilter);
@@ -89,12 +117,18 @@ public class Controller {
 			filtered = filteract1(f, data, new ArrayList<City>());
 		return filtered;
 	}
-
+	/**
+	 * Metodo che effettua il parsing delle singole condizioni del filtro e le attua
+	 * @param Condition JSONObject contenente la singola condizione
+	 * @param src ArrayList dei dati da filtrare
+	 * @param in ArrayList di partenza a cui aggiungere i nuovi record conformi al filtro se non già presenti
+	 * @return ArrayList di partenza con aggiunti i nuovi record conformi al filtro
+	 * @throws Exception Eccezioni lanciate dal metodo select, e ResponseStatusException se vengono inserite più istruzioni senza
+	 *	racchiuderle in un and oppure un or
+	 */
 	private ArrayList<City> filteract1(JSONObject Condition, ArrayList<City> src, ArrayList<City> in) throws Exception {
 		if (Condition.names().length() < 2) { // controllo se ho un array di condizioni non racchiuso in un and o un or
-			FilterUtils util = new FilterUtils();
 			String fieldname = Condition.names().get(0).toString();
-			System.out.println(fieldname);
 			String op = Condition.getJSONObject(fieldname).names().get(0).toString();
 			if (Condition.getJSONObject(fieldname).get(op) instanceof JSONArray) {
 				JSONArray value = Condition.getJSONObject(fieldname).getJSONArray(op);
@@ -102,12 +136,12 @@ public class Controller {
 				for (int i = 0; i < value.length(); i++) { // converto il valore il jsonarray in un array di oggetti
 					objvalue[i] = value.get(i);
 				}
-				return (ArrayList<City>) util.select(src, fieldname, op, in, objvalue);
+				return (ArrayList<City>) FilterUtils.select(src, in, op, fieldname, objvalue);
 
 			} else {
 				Object objvalue = Condition.getJSONObject(fieldname).get(op);
 
-				return (ArrayList<City>) util.select(src, fieldname, op, in, objvalue);
+				return FilterUtils.select(src, in, op,fieldname , objvalue);
 			}
 		} else
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,

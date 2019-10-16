@@ -16,6 +16,14 @@ import com.FM.OOPProject.model.City;
  * Classe che implementa tutte le funzioni di filtraggio
  */
 public class FilterUtils {
+	/**
+	 * Funzione che verifica una determinata condizione del filtro
+	 * @param value valore del dato da confrontare con il parametro del filtro
+	 * @param operator operatore da utilizzare per il confronto
+	 * @param par parametro o array di parametri del filtro
+	 * @return true se la condizione è verificata, false se non lo è
+	 * @throws ResponseStatusException se i parametri della richiesta non sono adatti al rispettivo operatore
+	 */
 	public static boolean check(Object value, String operator, Object... par) {
 		if (par.length==1) {
 			if (value instanceof Number && par[0] instanceof Number) {
@@ -37,7 +45,7 @@ public class FilterUtils {
 				case "$lte":
 					return valueD <= parD;
 				case "$bt":
-					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"between operator \"$bt\" requires two parameters");
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"between operator $bt requires two parameters");
 				default:
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid operator");
 				}
@@ -73,17 +81,22 @@ public class FilterUtils {
 			}
 		}
 	}
-
-	public Collection<City> select(Collection<City> src, String fieldName, String operator, ArrayList<City> in, Object... value ) throws Exception {
-		Collection<City> out = in;
-		selectAct(src,out,fieldName,operator,value);
-		return out;
-	}
-
-
-	private void selectAct(Collection<City> src, Collection<City> out, String fieldName, String operator, Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
+	/**
+	 * 
+	 * @param src Collection di oggetti di tipo City su cui operare il filtraggio
+	 * @param in ArrayList di partenza a cui aggiungere i nuovi elementi che soddisfano i parametri
+	 * @param fieldName Nome dell'attributo su cui effettuare il confronto
+	 * @param operator Operatore con cui effetuare il confronto
+	 * @param value Parametro o array di parametri del fitro
+	 * @throws IllegalAccessException Lanciata la funzione invoke non ha accesso alla definizione del metodo m
+	 * @throws IllegalArgumentException Lanciata se una funzione riceve un parametro non appropriato
+	 * @throws InvocationTargetException Lanciata se il metodo che invoco tramite invoke lancia a sua volta un Exception
+	 * @throws SecurityException Lanciata se getMethod prova ad accedere ad una risorsa per cui non ha sufficienti autorizzazioni 
+	 * @throws NoSuchMethodException Lanciata se viene fatto un riferimento ad un metodo non esistente
+	 */
+	public static ArrayList<City> select(ArrayList<City> src, ArrayList<City> in, String fieldName, String operator, Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException  {
+		ArrayList<City> out = in;
 		for(City item:src) {
-			try {
 				Object tmp = new Object();
 				if (Pattern.matches("^\\d+$",fieldName)){
 					int year = Integer.parseInt((String) fieldName);
@@ -96,12 +109,11 @@ public class FilterUtils {
 				if(FilterUtils.check(tmp, operator, value) && !(out.contains(item))) {
 					out.add(item);
 				}
+				
+				
 
-			}catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			}					
+		}
+		return out;
 		}
 	} 
-}
+

@@ -16,15 +16,18 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-
-
+/**
+ * Classe che si occupa del download del TSV a partire dal JSON assegnatoci 
+ */
 public class TSVDownload {
+	
+	/**
+	 * Costruttore vuoto
+	 */
 	public TSVDownload() {
-
-	}
+}
 	/**
 	 * Funzione che effettua il download del tsv dall'url fornito nel progetto
-	 * 
 	 * 
 	 * @throws IOException Per problemi con l'IO
 	 * @throws MalformedURLException Per problemi con l'URL

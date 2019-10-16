@@ -5,12 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
-import org.springframework.stereotype.Service;
-
 import com.FM.OOPProject.model.City;
 
-@Service
+/**
+ * Classe che si occupa di convertire il file tsv in un' ArrayList di oggetti City
+ */
 public class TSVParse {
 	public TSVParse() {
 
@@ -18,7 +17,7 @@ public class TSVParse {
 	
 	
 	/**
-	 * 
+	 * Funzione che effettua il parsing del tsv in un' ArrayList di oggetti di tipo City
 	 * @param Cities Arraylist di City che andrà a contenere il risultato del parsing
 	 * @throws IOException per problemi con l'input e l'output del file
 	 */
@@ -30,11 +29,11 @@ public class TSVParse {
 			String[] ss1 = ss[0].split(",");
 			float[] cpy = new float[29];
 			for (int i = 1; i < ss.length; i++) {
-				if (Pattern.matches("\\d+\\.\\d+ ", ss[i])) {
-					cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); //numeri con virgola con lettera;
-				} else if (Pattern.matches("\\d+ ", ss[i])) {
-						cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); //interi con lettera
-					} else if (Pattern.matches("\\d+", ss[i]))
+				if (Pattern.matches("\\d+\\.\\d+ ", ss[i])) { //numeri con virgola con lettera;
+					cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); 
+				} else if (Pattern.matches("\\d+ ", ss[i])) { //interi con lettera
+						cpy[i - 1] = Float.parseFloat(ss[i].split(" ")[0]); 
+					} else if (Pattern.matches("\\d+", ss[i])) //numeri interi con o senza virgola
 							cpy[i - 1] = Float.parseFloat(ss[i]);
 						else
 							cpy[i - 1] = -1;
