@@ -263,9 +263,15 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 </h3>
 <p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/UseCaseDiagram.png" alt style="max-width:100%;">
 </p>
-<h3>Activity Diagram
+<h3>Class Diagram
 </h3>
 <p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/ClassDiagram.png" alt style="max-width:100%;">
+</p>
+<h3>Sequence Diagrams / Stats
+</h3>
+<p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/SequenceDiagram.png" alt style="max-width:100%;">
+</p>
+<p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/SequenceDiagramStatistics.png" alt style="max-width:100%;">
 </p>
 
 ## Software utilizzato
@@ -277,5 +283,7 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 
 [Postman](https://www.getpostman.com/) Per testare le diverse richieste
 
-[draw.io](https://www.draw.io) Per disegnare i diagrammi UML
+[draw.io](https://www.draw.io) Per disegnare i diagrammi UML (use case diagram and class diagram)
+
+[VisualParadigm](https://www.visual-paradigm.com/) Per disegnare i diagrammi UML (sequence diagram)
 
