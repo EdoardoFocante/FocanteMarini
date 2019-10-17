@@ -135,7 +135,7 @@ in quanto i diversi record rappresentanto grandezze diverse e ha poco senso calc
 
 Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costituire il body di richieste di tipo POST atraverso i PATH /filter o /stats. Per il PATH /stats sarà possibile specificare o meno il parametro year.
 
-### 2 and + 2 or
+### 2 And + 2 Or:
 ```
 {
     "$and": [
@@ -164,7 +164,7 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
     ]
 }
 ```
-### 2 or :
+### 2 Or :
 ```
 {
     "$or": [
@@ -237,7 +237,7 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 }
 ```
 
-### 1 and 
+### 1 And:
 ```
 {
     "$and": [
