@@ -11,23 +11,23 @@ un campo city con il codice della città europea a cui sono riferiti i dati del 
 
 Abbiamo deciso di modellare il singolo record del file .tsv attraverso la classe City, dotata di 3 attributi: indic_ur, citycode, e un array di float contente i valori dell'indicatore per ogni anno.
 Viene poi creata nell'application un'arraylist di oggetti city che contiene tutto il dataset e che verrà passata attraverso uno static import al controller che eseguirà le operazioni richieste dall'utente.
-La classe Statiscs modella le statistische relative ad un singolo anno di una determinita ArrayList di oggetti City. Possiede l'attributo year per specificare a quale anno le statistiche fanno riferimento e tutti gli attributi associati alle statistiche richieste dal progetto(min,max,sum,count,avg,std_dev).
+La classe Statiscs modella le statistische relative ad un singolo anno di una determinita ArrayList di oggetti City. Possiede l'attributo year per specificare a quale anno le statistiche fanno riferimento e tutti gli attributi associati alle statistiche richieste dal progetto(min, max, sum, count, avg, std_dev).
 
  <h2 align="center">PATH</h2> 
 
 ### /data
 Si può accedere a questo path attraverso richieste GET o POST, ma nel caso POST il body è superfluo
-Restituisce l'intera lista di record in formato JSON senza applicare filtri
+Restituisce l'intera lista di record in formato JSON senza applicare filtri.
 ### /metadata
 Si può accedere a questo path attraverso richieste GET o POST, ma nel caso POST il body è superfluo
-Restituisce la struttura della classe City in formato JSON
+Restituisce la struttura della classe City in formato JSON.
 ### /filter
 Si può accedere a questo path attraverso una richiesta di tipo POST
 Restituisce un arraylist in formato JSON ottenuta applicando un filtro in formato JSON passato dall'utente tramite il body della richiesta POST.
-Non è possibile non inserire un filtro, ma è possibile inserire un filtro;
+Non è possibile non inserire un filtro, ma è possibile inserire un filtro vuoto.
 ### /stats
 Si può accedere a questo path attraverso una richiesta di tipo POST
-Restituisce le statistiche su un dataset filtrato per ogni anno e per un singolo anno che è possibile specificare tramite il parametro year da inserire nella richiesta http
+Restituisce le statistiche su un dataset filtrato per ogni anno e per un singolo anno che è possibile specificare tramite il parametro year da inserire nella richiesta http.
 
 <h2 align="center">FILTRI</h2> 
 
@@ -65,7 +65,7 @@ Restituisce le statistiche su un dataset filtrato per ogni anno e per un singolo
 }
 ```
 
-Dopo aver ricevuto un filtro, l'applicazione esegue l'or tra le istruzioni nella parte *$or* e  al risultato applica tutte le condizioni *$and*, operando, implicitamente, una and tra il JSONArray *$or* e il JSONArray *$and*. In presenza di almeno uno di questi due JSONArray l'applicazione ignorerà ciò a loro esterno.
+Dopo aver ricevuto un filtro, l'applicazione esegue l'or tra le istruzioni nella parte *$or* e  al risultato applica tutte le condizioni *$and*, operando, implicitamente, una and tra il JSONArray *$or* e il JSONArray *$and*. In presenza di almeno uno di questi due JSONArray l'applicazione ignorerà ciò che si trova all'esterno.
 
 I due JSONArray posso essere inseriti in qualsiasi ordine all'interno del JSON e possono contenere un numero qualsiasi di condizioni. Non è possibile, in quanto non conforme con lo standard JSON, avere multipli JSONArray *$and* o *$or*.
 
@@ -91,7 +91,7 @@ I possibili sono
  * "$lte" : Maggiore o uguale a un numero
  * "$bt" : Compreso tra due numeri
  
-**value1-4** sono i parametri con cui comparare i valori del dataset, possono essere numeri,stringhe, array di numeri o array di stringhe a seconda del tipo di operatore
+**value1-4** sono i parametri con cui comparare i valori del dataset, possono essere numeri, stringhe, array di numeri o array di stringhe a seconda del tipo di operatore
 
 
 
