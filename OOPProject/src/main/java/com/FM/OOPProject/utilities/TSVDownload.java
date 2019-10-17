@@ -30,9 +30,9 @@ public class TSVDownload {
 	/**
 	 * Metodo che effettua il download del tsv dall'url fornito nel progetto
 	 * 
-	 * @throws IOException           Per problemi con l'IO
-	 * @throws MalformedURLException Per problemi con l'URL
-	 * @throws JSONException         Per problemi con il parsing del JSON
+	 * @throws IOException           Lanciata per problemi con l'IO
+	 * @throws MalformedURLException Lanciata per problemi con l'URL
+	 * @throws JSONException         Lanciata per problemi con il parsing del JSON
 	 * 
 	 * 
 	 */
@@ -60,8 +60,8 @@ public class TSVDownload {
 	 * 
 	 * @param url      Indirizzo da cui viene scaricato il file
 	 * @param fileName Nome del file in cui verrà salvato il file scaricato
-	 * @throws MalformedURLException per
-	 * @throws IOException
+	 * @throws MalformedURLException Lanciata per problemi nel parsing da stringa a URL
+	 * @throws IOException Lanciata per problemi di I/O
 	 */
 	public static void download(String url, String fileName) throws MalformedURLException, IOException {
 		try (InputStream in = URI.create(url).toURL().openStream()) {
@@ -75,8 +75,8 @@ public class TSVDownload {
 	 * 
 	 * @param link
 	 * @return Stringa contenente il tsv
-	 * @throws MalformedURLException Per problemi con l'URL
-	 * @throws IOException           Per problemi di I/O
+	 * @throws MalformedURLException Lanciata per problemi nel parsing da stringa a URL
+	 * @throws IOException           Lanciata per problemi di I/O
 	 */
 	public static String readurl(String link) throws MalformedURLException, IOException {
 		URL url = new URL(link);

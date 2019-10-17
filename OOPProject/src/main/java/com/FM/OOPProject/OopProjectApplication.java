@@ -26,7 +26,10 @@ public class OopProjectApplication {
 	 * 
 	 * @param args argomenti della funzione main (non utilizzati)
 	 * @throws IOException           Lanciata nel caso di errori di I/O
-	 * @throws MalformedURLException Lanciata in caso di errori nella creazione dell'URL
+	 * @throws MalformedURLException Lanciata in caso di errori nella creazione
+	 *                               dell'URL
+	 * @throws MalformedURLException Lanciata in caso di errori nella creazione
+	 *                               dell'URL
 	 * @throws JSONException         Lanciata in caso di errori nel parsing del JSON
 	 */
 	public static void main(String[] args) throws JSONException, MalformedURLException, IOException {

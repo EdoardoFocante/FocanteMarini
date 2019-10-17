@@ -22,7 +22,7 @@ public class TSVParse {
 	 * 
 	 * @param Cities Arraylist di City che andrà a contenere il risultato del
 	 *               parsing
-	 * @throws IOException per problemi con l'input e l'output del file
+	 * @throws IOException Lanciata per problemi di I/O
 	 */
 	public static void ParseTSV(ArrayList<City> Cities) throws IOException {
 		BufferedReader in3 = new BufferedReader(new FileReader("t1.tsv"));

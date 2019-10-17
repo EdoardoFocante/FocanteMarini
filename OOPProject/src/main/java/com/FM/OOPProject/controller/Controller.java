@@ -108,10 +108,9 @@ public class Controller {
 		if (f.length() != 0) { // controllo che il filtro non sia vuoto
 			JSONArray arr;
 			if (f.has("$or") && f.getJSONArray("$or").length() > 0) { // Seconda condizione per evitare malfunzionamenti
-																		// in caso di sezioni or vuote
+				// in caso di sezioni or vuote
 				arr = f.getJSONArray("$or");
 				for (int i = 0; i < arr.length(); i++) {
-					System.out.println(arr.getJSONObject(i).toString());
 					filtered = filteract1(arr.getJSONObject(i), data, filtered);
 					// per l'or filtro parto dal risultato e aggiungo tutti gli
 					// elementi non già contenuti che soddisfano la nuova condizione
@@ -119,7 +118,7 @@ public class Controller {
 				}
 			} else
 				filtered = data; // se non ho una parte or, il vettore di partenza per le and è l'intera
-								 // arraylist dei dati
+			// arraylist dei dati
 			if (f.has("$and")) {
 				arr = f.getJSONArray("$and");
 				for (int i = 0; i < arr.length(); i++) {
@@ -132,7 +131,7 @@ public class Controller {
 			}
 			if (f.has("$or") || f.has("$and")) {
 				return filtered;
-			} else // se non ho nè and nè or elaboro soltanto la singola richiesta
+			} else
 				filtered = filteract1(f, data, new ArrayList<City>());
 			return filtered;
 		} else
@@ -150,25 +149,19 @@ public class Controller {
 	 * @return ArrayList di partenza con aggiunti i nuovi record conformi al filtro
 	 * @throws Exception Eccezioni lanciate dal metodo select, e
 	 *                   ResponseStatusException se vengono inserite più istruzioni
-	 *                   senza in un and oppure un or
+	 *                   senza in un and oppure un or senza racchiuderle in un and
+	 *                   oppure un or
 	 */
 	private ArrayList<City> filteract1(JSONObject Condition, ArrayList<City> src, ArrayList<City> in) throws Exception {
 		if (Condition.length() < 2) { // controllo se ho un array di condizioni non racchiuso in un and o un or
 			String fieldname = Condition.names().get(0).toString();
 			String op = Condition.getJSONObject(fieldname).names().get(0).toString();
-			if (Condition.getJSONObject(fieldname).get(op) instanceof JSONArray) { // il value dell'operatore può essere
-																					// un singolo oggetto od un array
-				JSONArray value = Condition.getJSONObject(fieldname).getJSONArray(op);
-				Object[] objvalue = new Object[value.length()];
-				for (int i = 0; i < value.length(); i++) { // converto il valore il jsonarray in un array di oggetti
-					objvalue[i] = value.get(i);
-				}
-				return (ArrayList<City>) FilterUtils.select(src, in, fieldname, op, objvalue);
-
-			} else {
-				Object objvalue = Condition.getJSONObject(fieldname).get(op);
-				return FilterUtils.select(src, in, fieldname, op, objvalue);
+			JSONArray value = Condition.getJSONObject(fieldname).getJSONArray(op);
+			Object[] objvalue = new Object[value.length()];
+			for (int i = 0; i < value.length(); i++) { // converto il valore il jsonarray in un array di oggetti
+				objvalue[i] = value.get(i);
 			}
+			return (ArrayList<City>) FilterUtils.select(src, in, fieldname, op, objvalue);
 		} else
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"To apply a filter with more than one condition add an $and or an $or section to your filter");

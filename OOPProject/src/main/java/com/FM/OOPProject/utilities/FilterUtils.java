@@ -14,7 +14,7 @@ import com.FM.OOPProject.model.City;
  */
 public class FilterUtils {
 	/**
-	 * Funzione che verifica una determinata condizione del filtro
+	 * Metodo che verifica una determinata condizione del filtro
 	 * 
 	 * @param value    valore del record da confrontare con il parametro del filtro
 	 * @param operator operatore da utilizzare per il confronto
@@ -23,7 +23,7 @@ public class FilterUtils {
 	 * @throws ResponseStatusException se i parametri della richiesta non sono
 	 *                                 adatti al rispettivo operatore
 	 */
-	private static boolean check(Object value, String operator, Object... par) {
+	private static boolean check(Object value, String operator, Object[] par) {
 		if (par.length == 1) { // se il parametro della condizione è costituito da un solo elemento
 			if (value instanceof Number && par[0] instanceof Number) {
 				Float valueF = ((Number) value).floatValue();
@@ -48,8 +48,8 @@ public class FilterUtils {
 							"between operator $bt requires two parameters");
 				default:
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid operator");
-				} 
-			} else if (value instanceof String && par[0] instanceof String) { 
+				}
+			} else if (value instanceof String && par[0] instanceof String) {
 				switch (operator) {
 				case "$eq":
 				case "$in":
@@ -110,12 +110,12 @@ public class FilterUtils {
 	 *                                   un metodo non esistente
 	 */
 	public static ArrayList<City> select(ArrayList<City> src, ArrayList<City> in, String fieldName, String operator,
-			Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			Object[] value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
 		ArrayList<City> out = in;
 		for (City item : src) {
 			Object tmp = new Object();
-			if (Pattern.matches("^\\d+$", fieldName)) { //se field è un anno uso il metodo getYearData
+			if (Pattern.matches("^\\d+$", fieldName)) { // se field è un anno uso il metodo getYearData
 				int year = Integer.parseInt((String) fieldName);
 				tmp = item.getYearData(year);
 			} else { // se field è "citycode" o "indic_ur" uso il metodo get apposito
