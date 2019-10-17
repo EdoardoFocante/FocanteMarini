@@ -11,6 +11,8 @@ un campo city con il codice della città europea a cui sono riferiti i dati del 
 
 Abbiamo deciso di modellare il singolo record del file .tsv attraverso la classe City, dotata di 3 attributi: indic_ur, citycode, e un array di float contente i valori dell'indicatore per ogni anno.
 Viene poi creata nell'application un'arraylist di oggetti city che contiene tutto il dataset e che verrà passata attraverso uno static import al controller che eseguirà le operazioni richieste dall'utente.
+Il parsing viene effettuato dalla classe TSVParse, convertendo i dati alfanumerici in numeri di tipo float e i dati mancanti -1, così da poterli poi escludere dalle statistiche.
+
 La classe Statiscs modella le statistische relative ad un singolo anno di una determinita ArrayList di oggetti City. Possiede l'attributo year per specificare a quale anno le statistiche fanno riferimento e tutti gli attributi associati alle statistiche richieste dal progetto(min, max, sum, count, avg, std_dev).
 
  <h2 align="center">PATH</h2> 
@@ -268,7 +270,12 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 
 ## Software utilizzato
 [Eclipse](https://www.eclipse.org) Per scrivere il codice
+
 [SpringInitializr](https://start.spring.io/) Per creare il progetto spring
+
 [GitHub](https://github.com) Per il versioning del codice
+
 [Postman](https://www.getpostman.com/) Per testare le diverse richieste
+
 [draw.io](https://www.draw.io) Per disegnare i diagrammi UML
+
