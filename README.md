@@ -16,18 +16,13 @@ La classe Statiscs modella le statistische relative ad un singolo anno di una de
  <h2 align="center">PATH</h2> 
 
 ### /data
-Si può accedere a questo path attraverso richieste GET o POST, ma nel caso POST il body è superfluo
-Restituisce l'intera lista di record in formato JSON senza applicare filtri.
+Si può accedere a questo path attraverso richieste GET o POST, ma nel caso POST il body è superfluo. Restituisce l'intera lista di record in formato JSON senza applicare filtri.
 ### /metadata
-Si può accedere a questo path attraverso richieste GET o POST, ma nel caso POST il body è superfluo
-Restituisce la struttura della classe City in formato JSON.
+Si può accedere a questo path attraverso richieste GET o POST, ma nel caso POST il body è superfluo. Restituisce la struttura della classe City in formato JSON.
 ### /filter
-Si può accedere a questo path attraverso una richiesta di tipo POST
-Restituisce un arraylist in formato JSON ottenuta applicando un filtro in formato JSON passato dall'utente tramite il body della richiesta POST.
-Non è possibile non inserire un filtro, ma è possibile inserire un filtro vuoto.
+Si può accedere a questo path attraverso una richiesta di tipo POST. Restituisce un arraylist in formato JSON ottenuta applicando un filtro in formato JSON passato dall'utente tramite il body della richiesta POST. Non è possibile non inserire un filtro, ma è possibile inserire un filtro vuoto.
 ### /stats
-Si può accedere a questo path attraverso una richiesta di tipo POST
-Restituisce le statistiche su un dataset filtrato per ogni anno e per un singolo anno che è possibile specificare tramite il parametro year da inserire nella richiesta http.
+Si può accedere a questo path attraverso una richiesta di tipo POST. Restituisce le statistiche su un dataset filtrato per ogni anno e per un singolo anno che è possibile specificare tramite il parametro year da inserire nella richiesta http.
 
 <h2 align="center">FILTRI</h2> 
 
@@ -136,6 +131,7 @@ in quanto i diversi record rappresentanto grandezze diverse e ha poco senso calc
 
 <h2 align="center">ESEMPI DI FILTRI</h2> 
 
+Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costituire il body di richieste di tipo POST atraverso i PATH /filter o /stats. Per il PATH /stats sarà possibile specificare o meno il parametro year.
 
 ### 2 and + 2 or
 ```
