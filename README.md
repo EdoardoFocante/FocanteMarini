@@ -256,7 +256,7 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 
 
 <h2><div align="center">UML</div>
-</21>
+</h2>
 <p>Sono riportati di seguito i diagrammi UML dell'applicazione
 </p>
 <h3>UseCase Diagram
@@ -267,10 +267,12 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 </h3>
 <p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/ClassDiagram.png" alt style="max-width:100%;">
 </p>
-<h3>Sequence Diagrams / Stats
+<h3>Sequence Diagrams/filter
 </h3>
 <p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/SequenceDiagram.png" alt style="max-width:100%;">
 </p>
+<h3>Sequence Diagrams/stats
+</h3>
 <p align="center"><img src="https://github.com/EdoardoFocante/FocanteMarini/blob/master/UML%20FocanteMarini/SequenceDiagramStatistics.png" alt style="max-width:100%;">
 </p>
 
