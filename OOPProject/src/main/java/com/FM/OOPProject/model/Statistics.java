@@ -175,7 +175,7 @@ public class Statistics {
 	}
 
 	/**
-	 * Metodo per leggere la deviazione standard dei valori
+	 * Metodo per leggere la deviazione standard
 	 * 
 	 * @return deviazione standard
 	 */

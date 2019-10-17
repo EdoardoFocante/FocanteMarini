@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.regex.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,23 +26,25 @@ public class FilterUtils {
 	private static boolean check(Object value, String operator, Object... par) {
 		if (par.length == 1) {
 			if (value instanceof Number && par[0] instanceof Number) {
-				Double valueD = ((Number) value).doubleValue();
-				Double parD = ((Number) par[0]).doubleValue();
+
+				Float valueF = ((Number) value).floatValue();
+				Float parF = ((Number) par[0]).floatValue();
+
 				switch (operator) {
 				case "$eq":
 				case "$in":
-					return valueD == parD;
+					return valueF == parF;
 				case "$nin":
 				case "$not":
-					return !(valueD == parD);
+					return !(valueF == parF);
 				case "$gt":
-					return valueD > parD;
+					return valueF > parF;
 				case "$gte":
-					return valueD >= parD;
+					return valueF >= parF;
 				case "$lt":
-					return valueD < parD;
+					return (valueF < parF && valueF > 0);
 				case "$lte":
-					return valueD <= parD;
+					return (valueF <= parF && valueF > 0);
 				case "$bt":
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 							"between operator $bt requires two parameters");
@@ -65,23 +66,28 @@ public class FilterUtils {
 			} else
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameter format");
 		} else { // par is made of more than one element
-			Double valueD = ((Number) value).doubleValue();
-			Double parD = ((Number) par[0]).doubleValue();
 			switch (operator) {
 			case "$in":
 				return Arrays.asList(par).contains(value);
 			case "$nin":
 				return !(Arrays.asList(par).contains(value));
 			case "$bt":
-				if (par.length == 2) {
-					Double ub = ((Number) par[1]).doubleValue(); // Upper Bound
-					return (valueD <= ub && valueD >= parD);
+				if (par.length == 2 && par[0] instanceof Number && par[1] instanceof Number) {
+					Float valueF = ((Number) value).floatValue();
+					Float parF = ((Number) par[0]).floatValue();
+					Float ub = ((Number) par[1]).floatValue(); // Upper Bound
+					return (valueF <= ub && valueF >= parF);
 				}
+
+				else
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+							"$bt operator requires 2 numeric parameters");
 			default:
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 						"Operator " + operator + " not compatible with parameters");
 
 			}
+
 		}
 	}
 
@@ -108,7 +114,7 @@ public class FilterUtils {
 	 */
 	public static ArrayList<City> select(ArrayList<City> src, ArrayList<City> in, String fieldName, String operator,
 			Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
+	NoSuchMethodException, SecurityException {
 		ArrayList<City> out = in;
 		for (City item : src) {
 			Object tmp = new Object();
