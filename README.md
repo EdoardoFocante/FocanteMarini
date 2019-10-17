@@ -256,7 +256,7 @@ Di seguito alcuni filtri utilizzati per testare l'applicazione. Dovranno costitu
 
 
 <h2><div align="center">UML</div>
-</21>
+</h2>
 <p>Sono riportati di seguito i diagrammi UML dell'applicazione
 </p>
 <h3>UseCase Diagram
