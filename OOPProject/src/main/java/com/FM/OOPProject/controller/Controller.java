@@ -108,7 +108,7 @@ public class Controller {
 		if (f.length() != 0) { // controllo che il filtro non sia vuoto
 			JSONArray arr;
 			if (f.has("$or") && f.getJSONArray("$or").length() > 0) { // Seconda condizione per evitare malfunzionamenti
-				// in caso di sezioni or vuote
+																	  // in caso di sezioni or vuote
 				arr = f.getJSONArray("$or");
 				for (int i = 0; i < arr.length(); i++) {
 					filtered = filteract1(arr.getJSONObject(i), data, filtered);

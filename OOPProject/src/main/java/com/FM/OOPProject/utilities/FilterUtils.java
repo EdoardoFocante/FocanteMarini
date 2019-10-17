@@ -73,7 +73,7 @@ public class FilterUtils {
 				if (par.length == 2 && par[0] instanceof Number && par[1] instanceof Number) {
 					Float valueF = ((Number) value).floatValue();
 					Float parF = ((Number) par[0]).floatValue();
-					Float par2F = ((Number) par[1]).floatValue(); // Secondo Parametro
+					Float par2F = ((Number) par[1]).floatValue(); // Secondo parametro dell'operatore between
 					return (valueF <= Math.max(parF, par2F) && valueF >= Math.min(parF, par2F));
 				} else
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -111,18 +111,19 @@ public class FilterUtils {
 	 */
 	public static ArrayList<City> select(ArrayList<City> src, ArrayList<City> in, String fieldName, String operator,
 			Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-	NoSuchMethodException, SecurityException {
+			NoSuchMethodException, SecurityException {
 		ArrayList<City> out = in;
 		for (City item : src) {
 			Object tmp = new Object();
-			if (Pattern.matches("^\\d+$", fieldName)) { // se field è un anno uso il metodo getYearData
+			if (Pattern.matches("^\\d+$", fieldName)) { // se fieldName è un anno uso il metodo getYearData
 				int year = Integer.parseInt((String) fieldName);
 				tmp = item.getYearData(year);
-			} else { // se field è "citycode" o "indic_ur" uso il metodo get apposito
+			} else if(fieldName.equals("indic_ur") && fieldName.equals("citycode")){ // se fieldName è "citycode" o "indic_ur" uso il metodo get apposito
 				Method m = item.getClass()
 						.getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
 				tmp = m.invoke(item);
-			}
+			} else throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Campo "+fieldName+" non valido");
 			if (FilterUtils.check(tmp, operator, value) && !(out.contains(item))) {
 				out.add(item);
 			}
