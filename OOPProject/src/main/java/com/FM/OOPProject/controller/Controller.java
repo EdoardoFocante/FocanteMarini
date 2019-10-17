@@ -156,12 +156,20 @@ public class Controller {
 		if (Condition.length() < 2) { // controllo se ho un array di condizioni non racchiuso in un and o un or
 			String fieldname = Condition.names().get(0).toString();
 			String op = Condition.getJSONObject(fieldname).names().get(0).toString();
-			JSONArray value = Condition.getJSONObject(fieldname).getJSONArray(op);
-			Object[] objvalue = new Object[value.length()];
-			for (int i = 0; i < value.length(); i++) { // converto il valore il jsonarray in un array di oggetti
-				objvalue[i] = value.get(i);
+
+			if (Condition.getJSONObject(fieldname).get(op) instanceof JSONArray) { // il value dell'operatore può essere
+				// un singolo oggetto od un array
+				JSONArray value = Condition.getJSONObject(fieldname).getJSONArray(op);
+				Object[] objvalue = new Object[value.length()];
+				for (int i = 0; i < value.length(); i++) { // converto il valore il jsonarray in un array di oggetti
+					objvalue[i] = value.get(i);
+				}
+				return (ArrayList<City>) FilterUtils.select(src, in, fieldname, op, objvalue);
+
+			} else {
+				Object objvalue = Condition.getJSONObject(fieldname).get(op);
+				return FilterUtils.select(src, in, fieldname, op, objvalue);
 			}
-			return (ArrayList<City>) FilterUtils.select(src, in, fieldname, op, objvalue);
 		} else
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"To apply a filter with more than one condition add an $and or an $or section to your filter");
