@@ -149,8 +149,8 @@ public class Controller {
 	 * @return ArrayList di partenza con aggiunti i nuovi record conformi al filtro
 	 * @throws Exception Eccezioni lanciate dal metodo select, e
 	 *                   ResponseStatusException se vengono inserite più istruzioni
-	 *                   senza in un and oppure un or senza racchiuderle in un and
-	 *                   oppure un or
+	 *                   senza in un and oppure un or senza racchiuderle in una and
+	 *                   oppure una or
 	 */
 	private ArrayList<City> filteract1(JSONObject Condition, ArrayList<City> src, ArrayList<City> in) throws Exception {
 		if (Condition.length() < 2) { // controllo se ho un array di condizioni non racchiuso in un and o un or

@@ -59,7 +59,7 @@ public class FilterUtils {
 					return !(value.equals(par[0]));
 				default:
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-							"Operator " + operator + " is not valid or is not compatible with string type");
+							"Operator " + operator + " is not valid or is not compatible with String type");
 				}
 			} else
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parameter format");
@@ -111,7 +111,7 @@ public class FilterUtils {
 	 */
 	public static ArrayList<City> select(ArrayList<City> src, ArrayList<City> in, String fieldName, String operator,
 			Object... value) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
+	NoSuchMethodException, SecurityException {
 		ArrayList<City> out = in;
 		for (City item : src) {
 			Object tmp = new Object();
