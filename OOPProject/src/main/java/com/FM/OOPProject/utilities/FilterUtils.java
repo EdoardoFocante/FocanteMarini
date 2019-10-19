@@ -118,7 +118,7 @@ public class FilterUtils {
 			if (Pattern.matches("^\\d+$", fieldName)) { // se fieldName è un anno uso il metodo getYearData
 				int year = Integer.parseInt((String) fieldName);
 				tmp = item.getYearData(year);
-			} else if(fieldName.equals("indic_ur") && fieldName.equals("citycode")){ // se fieldName è "citycode" o "indic_ur" uso il metodo get apposito
+			} else if(fieldName.equals("indic_ur") || fieldName.equals("citycode")){ // se fieldName è "citycode" o "indic_ur" uso il metodo get apposito
 				Method m = item.getClass()
 						.getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1), null);
 				tmp = m.invoke(item);
